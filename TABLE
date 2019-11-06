@@ -1,0 +1,143 @@
+CREATE TABLE 
+
+  SYNTAX:
+      
+      CREATE [TEMPORARY|EXTERNAL] TABLE TABLENAME
+      (COLUMNNAME COLUMNTYPE [COMMENT "comment"],
+      COLUMNNAME COLUMNTYPE [COMMENT "comment"]'....)
+      [COMMENT "commnt"]
+      [PARTITIONED BY (COLUMNNAME COLUMNDATAYPE [COMMENT "comment"],...)
+      CLUSTERED BY (COLUMNANME,CLUMNNAME,..)[SORTED BY (COLUMNNAME[ASC|DESC],....) INTO NUMBER BUCKETS
+      [SKEWED BY (COLUMNNAME,COLUMNNAME,.....)]
+      ON ((VALUES,VALUES),(VALUES,VALUES),..)
+      [STORED AS DIRECTORIES]
+      [
+      [ROW FORMAT rowforamt]
+      [STORED AS filtype]
+      | STORED BY 'storage.handler.class.name' [WITH SERDEPROPERTIES (...)]
+      
+      [LOCATION hdfs]
+      [TBLPROPERTIES(PROPERTY=VALUE,..]
+      AS SELECT
+      
+      
+      
+CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name    -- (Note: TEMPORARY available in Hive 0.14.0 and later)
+  [(col_name data_type [column_constraint_specification] [COMMENT col_comment], ... [constraint_specification])]
+  [COMMENT table_comment]
+  [PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]
+  [CLUSTERED BY (col_name, col_name, ...) [SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]
+  [SKEWED BY (col_name, col_name, ...)                  -- (Note: Available in Hive 0.10.0 and later)]
+     ON ((col_value, col_value, ...), (col_value, col_value, ...), ...)
+     [STORED AS DIRECTORIES]
+  [
+   [ROW FORMAT row_format] 
+   [STORED AS file_format]
+     | STORED BY 'storage.handler.class.name' [WITH SERDEPROPERTIES (...)]  -- (Note: Available in Hive 0.6.0 and later)
+  ]
+  [LOCATION hdfs_path]
+  [TBLPROPERTIES (property_name=property_value, ...)]   -- (Note: Available in Hive 0.6.0 and later)
+  [AS select_statement];   -- (Note: Available in Hive 0.5.0 and later; not supported for external tables)
+
+DATATYPES:
+
+  Primitive Types
+
+Types are associated with the columns in the tables. The following Primitive types are supported:
+	Integers
+		TINYINT—1 byte integer
+		SMALLINT—2 byte integer
+		INT—4 byte integer
+		BIGINT—8 byte integer
+	Boolean type
+		BOOLEAN—TRUE/FALSE
+	Floating point numbers
+		FLOAT—single precision
+		DOUBLE—Double precision
+	Fixed point numbers
+		DECIMAL—a fixed point value of user defined scale and precision
+	String types
+		STRING—sequence of characters in a specified character set
+		VARCHAR—sequence of characters in a specified character set with a maximum length
+		CHAR—sequence of characters in a specified character set with a defined length
+	Date and time types
+		TIMESTAMP — A date and time without a timezone ("LocalDateTime" semantics)
+		TIMESTAMP WITH LOCAL TIME ZONE — A point in time measured down to nanoseconds ("Instant" semantics)
+		DATE—a date
+	Binary types
+		BINARY—a sequence of bytes
+		
+Complex Types
+
+Complex Types can be built up from primitive types and other composite types using:
+
+Structs: the elements within the type can be accessed using the DOT (.) notation.
+For example, for a column c of type STRUCT {a INT; b INT}, the a field is accessed by the expression c.a
+Maps (key-value tuples): The elements are accessed using ['element name'] notation. 
+For example in a map M comprising of a mapping from 'group' -> gid the gid value can be accessed using M['group']
+Arrays (indexable lists): The elements in the array have to be in the same type. 
+Elements can be accessed using the [n] notation where n is an index (zero-based) into the array. 
+For example, for an array A having the elements ['a', 'b', 'c'], A[1] retruns 'b'.
+
+RNAGE OF VALUES = -2^N TO 2^N-1
+
+EXAMPLES FOR DATATYPES:
+
+PRIMITIVE DATATYPES
+
+  CREATE TABLE M1(ID SMALLINT,ID2 TINYINT,ID3 INT,ID4 BIGINT);
+  INSERT INTO TABLE M1 VALUES (1234,45678,34577,9897879);
+  SELECT * FROM M1;
+  1234    NULL    34577   9897879
+  
+BOOLEAN DATATYPE:
+  
+  CREATE TABLE M2 (GENDER BOOLEAN);
+  INSERT INTO TABLE M2 VALUES("TRUE");
+  SELECT * FROM M2;TRUE
+  INSERT INTO TABLE M2 VALUES (TRUE);
+  SELECT * FROM M2;
+  TRUE
+  TRUE
+  INSERT INTO TABLE M2 VALUES("MOUNIKA"); TRUE
+  INSERT INTO TABLE M2 VALUES(0);TRUE
+  INSERT INTO TABLE M2 VALUES(NULL);NULL
+  INSERT INTO table m2 VALUES(FALSE);FALSE
+  INSERT INTO table m2 VALUES("FALSE"); TRUE
+  
+FLOATING POINT NUMBERS:
+  CREATE TABLE M3 (ID1 FLOAT,ID2 DOUBLE);
+   INSERT INTO TABLE M3 VALUES(1234.78098089,2233.780982323123); 1234.781        2233.780982323123
+   https://www.thecrazyprogrammer.com/2018/04/single-precision-vs-double-precision.html
+   
+DECIMAL POINT NUMBERS
+
+  DECIMAL(PRECISION[,SCLAE])
+  MAX:DECIMAL(38,38)
+  DFAULT:DECIMAL(9,0)
+  
+  CREATE TABLE M5(ID DECIMAL(5,3);
+  INSERT INTO TABLE M5 VALUES(1.000);1 SINCE TOTAL DIGITS ARE NOT 5
+  INSERT INTO TABLE M5 VALUES(12.234);12.234
+  INSERT INTO TABLE M5 VALUES(122.34);NULL SCALE IS NOT THREE
+  INSERT INTO TABLE M5 VALUES(12.34);12.34
+  
+STRING DATATYPES:
+
+  CREATE TABLE M6 (NAME1 STRING,NAME2 VARCHAR(5),NAME3 CHAR(5));
+  INSERT INTO TABLE M6 VALUES("MOUNIKA","MOUNIKA","MOUNIKA");
+  MOUNIKA MOUNI   MOUNI
+  
+DATE AND TIMESTAMP:
+  
+  CREATE TABLE M7 (DATE1 DATE,TIMESTANP1 TIMESTAMP);
+  INSERT INTO TABLE M7 VALUES ("1999-01-23","1999-01-23 00:23:23");
+  1999-01-23      1999-01-23 00:23:23
+  
+  INSERT INTO TABLE M7 VALUES ("1999-01-23 00:23:23","1999-01-23");
+  NULL    1999-01-23 00:00:00
+  INSERT INTO TABLE M7 VALUES ('1999-01-23','1999-01-23');
+  1999-01-23      1999-01-23 00:00:00
+  
+
+      
