@@ -1,0 +1,80 @@
+CREATE DATABASE:
+
+SYNTAX:
+
+        CREATE DATABASE|SCHEMA [IF NOT EXISTS] DATABASENAME
+        [COMMENT "COMMENT"]
+        [LOCATION "LOCATION"]
+        [WITH DBPROPERTIES("PROPERTY"="VALUE")]
+        
+
+hive (mounika)> create database if not exists mounika 
+              > COMMENT "database for all hive operations"
+              > with DBPROPERTIES ("owner"="mounika");
+OK
+Time taken: 0.045 seconds
+hive (mounika)> describe database mounika;
+OK
+mounika database for all hive operations        hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db       mounikachowdary1245666  USER
+Time taken: 0.153 seconds, Fetched: 1 row(s)
+hive (mounika)> describe database extended mounika
+              > ;
+OK
+mounika database for all hive operations        hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db       mounikachowdary1245666  USER    {ow
+ner=mounika}
+Time taken: 0.123 seconds, Fetched: 1 row(s)
+
+hive (mounika)> create database mounika_inbound
+              > comment "inbound database"
+              > location "hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/hive/warehouse"
+              > with dbproperties("owner"="mounika");
+OK
+Time taken: 0.072 seconds
+hive (mounika)> describe database mounika_inbound;
+OK
+mounika_inbound inbound database        hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/hive/warehouse   mounikachowdary1245666  USER
+Time taken: 0.291 seconds, Fetched: 1 row(s)
+
+
+hive (mounika)> create schema if not exists mounika_outbound
+              > comment "outbound database"
+              > location "hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/hive/warehouse"
+              > with dbproperties("createdby"="mounika");
+OK
+Time taken: 0.055 seconds
+hive (mounika)> describe database mounika_outbound;
+OK
+mounika_outbound        outbound database       hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/hive/warehouse   mounikachowdary1245666  USE
+R
+Time taken: 0.122 seconds, Fetched: 1 row(s)
+hive (mounika)>
+
+ALTER DATABASES:
+
+SYNTAX
+        1. ALTER DATABASE|SCHEMA SET DBPROPERTIES("PROPERTY"="VALUE");
+        2. ALTER DATABASE|SCHEMA SET LOCATION 'HDFS PATH'
+        3. ALTER DATABASE|SCHEMA SET OWNER USER|ROLE USER_OR_ROLE;
+
+  hive (mounika)> alter database mounika set dbproperties("createdby"="mounika","reason"="hiv op");
+OK
+Time taken: 0.239 seconds
+hive (mounika)> alter database mounika set dbproperties ("hive.warehouse.dir"="hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/hive/warehous
+e");
+OK
+Time taken: 0.258 seconds
+
+
+DROP DATABASE:
+
+SYNTAX:
+        DROP DATABASE|SCHEMA IF EXISTS DATABASENAME CASCADE|RESTRICT;
+        
+hive (mounika)> drop database mounika
+              > ;
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. InvalidOperationException(message:Database mounika is not empty. One or more ta
+bles exist.)
+// by default th drop database will be executed in restrict mode where database must be empty to drop database;
+hive (mounika)> drop database mounika cascade;
+OK
+Time taken: 16.626 seconds
