@@ -1,0 +1,65 @@
+BUKETING
+
+  CREATE TABLE B1 (ID INT,NAME STRING,COUNTRY STRING,STATE STRING)
+  CLUSTERED BY (COUNTRY) SORTED BY (STATE) INTO 2 BUCKETS
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ',';
+  
+  
+  INSERT INTO TABLE B1 SELECT * FROM TT2;
+  
+  hive> SELECT * FROM B1;
+OK
+3       sekhar  us      mexico
+1       mounika india   andhra
+2       murali  india   andhrapradesh
+4       mani    india   telngana
+1       mounika india   andhra
+2       murali  india   andhrapradesh
+3       sekhar  us      mexico
+4       mani    india   telngana
+
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1
+Found 3 items
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         19 2019-11-07 06:45 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000000_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         74 2019-11-07 06:45 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000001_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         93 2019-11-07 06:43 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/file3
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -cat hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000000_0
+3,sekhar,us,mexico
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -cat hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000001_0
+1,mounika,india,andhra
+2,murali,india,andhrapradesh
+4,mani,india,telngana
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1
+Found 5 items
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         19 2019-11-07 06:45 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000000_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         19 2019-11-07 07:07 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000000_0_copy_1
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         74 2019-11-07 06:45 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000001_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         92 2019-11-07 07:07 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000001_0_copy_1
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         93 2019-11-07 06:43 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/file3
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -cat hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000001_0_copy_1
+1,mounika,india,andhra
+2,murali,india,andhrapradesh
+4,mani,india,telngana
+2,mani,india,zero
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -cat hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b1/000000_0_copy_1
+3,sekhar,us,mexico
+[mounikachowdary1245666@cxln4 ~]$ 
+
+
+********************************************************************************************************************************************
+
+BUCKETING USING TWO COLUMNS:
+
+    CREATE TABLE B2 (ID INT, NAME STRING,COUNTRY STRING,STATE STRING)
+    CLUSTERED BY (COUNTRY,STATE) INTO 2 BUCKETS;
+
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b2
+Found 2 items
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         29 2019-11-07 07:19 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b2/000000_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         82 2019-11-07 07:19 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/b2/000001_0
+
+
