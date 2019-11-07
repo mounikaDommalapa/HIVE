@@ -1,0 +1,61 @@
+PARTITIONG:
+
+  1.DYNAMIC PARTITIONG
+  2.STATIC PARTITIONG
+  
+  STATIC PARTITIONING
+  
+      CREATE TABLE T1 (ID INT,NAMESAL MAP<STRING,STRING>)
+      PARTITIONED BY (COUNTRY STRING)
+      ROW FORMAT DELIMITED
+      FIELDS TERMINATED BY '|'
+      MAP KEYS TERMINATED BY ','
+      
+      
+      INSERT INTO TABLE T1 PARTITION(COUNTRY="INDIA") SELECT 1,MAP("MOUNIKA","800000") FROM DUMMY;
+      
+      SELECT * FROM T1
+      
+      1       {"MOUNIKA":"800000"}    INDIA
+      
+      [mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1
+      Found 1 items
+      drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 04:01 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=INDIA
+    
+      FILE10
+      
+      1|"mounika","800000"|india
+      2|"satya","1000000"|us
+      
+       LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/file10' INTO TABLE T1 PARTITION(COUNTRY="INDIA");
+       
+       
+      1       {"MOUNIKA":"800000"}    INDIA
+      1       {"\"mounika\"":"\"800000\""}    INDIA
+      2       {"\"satya\"":"\"1000000\""}     INDIA
+
+      FILE10
+      
+      1|mounika,800000|india
+      2|satya,1000000|us
+      
+      LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/file10' INTO TABLE T1 PARTITION(COUNTRY="INDIA");
+      
+      1       {"MOUNIKA":"800000"}    INDIA
+      1       {"\"mounika\"":"\"800000\""}    INDIA
+      2       {"\"satya\"":"\"1000000\""}     INDIA
+      1       {"mounika":"800000"}    INDIA
+      2       {"satya":"1000000"}     INDIA
+      
+      [mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=INDIA
+Found 3 items
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         17 2019-11-07 04:01 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=INDIA
+/000000_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         50 2019-11-07 04:06 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=INDIA
+/file10
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         42 2019-11-07 04:10 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=INDIA
+/file10_copy_1
+
+
+DYNAMIC PARTITIONING:
+
