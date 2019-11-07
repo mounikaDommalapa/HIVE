@@ -100,6 +100,42 @@ SET HIVE.EXEC.DYNAMIC.PARTITION=TRUE
 SET HIVE.EXEC.DYNAMIC.PARTITION.MODE=NONSTRICT;
 
 
+****************************************************************************************************************************
+
+TWO COLUMN PARTITIONING
+
+    CREATE TABLE T2 (ID INT ,NAME STRING)
+    PARTITIONED BY (COUNTRY STRING,STATE STRING)
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    
+    CREATE TABLE TT2 (ID INT, NAME STRING,COUNTRY STRING,STATE STRING)
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    
+    FILE3:
+    
+    1,mounika,india,andhra
+    2,murali,india,andhrapradesh
+    3,sekhar,us,mexico
+    4,mani,india,telngana
+    
+    LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/file3' INTO TABLE TT2;
+    
+    SELECT * FROM TT2;
+    1       mounika india   andhra
+    2       murali  india   andhrapradesh
+    3       sekhar  us      mexico
+    4       mani    india   telngana
+    
+    INSERT INTO TABLE T2 PARTITION(COUNTRY,STATE) SELECT * FROM TT2;
+    
+    [mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/t2
+Found 3 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 06:24 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/t2/country=__HIVE_DEFAULT_P
+ARTITION__
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 06:27 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/t2/country=india
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 06:27 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/t2/country=us
 
       
       
