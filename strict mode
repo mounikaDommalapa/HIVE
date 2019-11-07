@@ -20,3 +20,23 @@ STRICT MODE:
      SELECT * FROM TT1 ORDER BY ID LIMIT 4;
      1       {"mounika":"800000"}    india
      2       {"satya":"1000000"}     us
+
+
+    3. The third and final type of query prevented is a Cartesian product. 
+    Users coming from the relational database world may expect that queries that perform a JOIN not with an ON clause but with a WHERE clause will have the query optimized by the query planner, effectively converting the WHERE clause into an ON clause.
+    Unfortunately, Hive does not perform this optimization, so a runaway query will occur if the tables are large:
+    
+    NONSTRICT:
+    
+    select * from t1 join tt1 where t1.id=tt1.id;
+    1       {"MOUNIKA":"800000"}    INDIA   1       {"mounika":"800000"}    india
+    1       {"mounika":"800000"}    INDIA   1       {"mounika":"800000"}    india
+    2       {"satya":"1000000"}     INDIA   2       {"satya":"1000000"}     us
+    1       {"mounika":"800000"}    india   1       {"mounika":"800000"}    india
+    2       {"satya":"1000000"}     us      2       {"satya":"1000000"}     us
+    1       {"\"mounika\"":"\"800000\""}    INDIA   1       {"mounika":"800000"}    india
+    2       {"\"satya\"":"\"1000000\""}     INDIA   2       {"satya":"1000000"}     us
+    
+    STRICT:
+    select * from t1 join tt1 where t1.id=tt1.id;
+    FAILED: SemanticException [Error 10041]: No partition predicate found for Alias "t1" Table "t1"
