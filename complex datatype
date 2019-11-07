@@ -1,10 +1,10 @@
 COMPLEX DATATYPES:
 
   MAP
-    CREATE TABLE C11 (OTHERS MAP<INT,STRING>,NAME STRING)
+    CREATE TABLE C14 (OTHERS MAP<INT,STRING>,NAME STRING)
     ROW FORMAT DELIMITED
     FIELDS TERMINATED BY '|'
-    COLLECTION ITEMS TERMINATED BY ','
+    MAP KEYS TERMINATED BY ','
     
     we cannot directly insert the complex data into the table we need to create a dummy table at least with single row.
     
@@ -18,10 +18,11 @@ COMPLEX DATATYPES:
     2,SAI|SONU
     3,KUMAR|SRI
     
-    LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/FILE7' INTO TABLE C11;
-    {1:null}        MOUNI
-    {2:null}        SONU
-    {3:null}        SRI
+    LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/file7' INTO TABLE C14;
+  {1:"MOUNI"}     MOUNI
+  {2:"SAI"}       SONU
+  {3:"KUMAR"}     SRI
+  {4:"mouni"}     mouni
   
   ARRAY:
     
