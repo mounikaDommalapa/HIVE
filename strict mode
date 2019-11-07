@@ -1,0 +1,22 @@
+STRICT MODE:
+
+    STRICT MODE 
+        
+        HIVE STRICT MODE RESTRICT SOME OPERATIONS IN HIVE.
+        
+    1. IT RESTRICTS QUERIES ON PARTITIONED TABLE WITHOUT WHERE CLAUSE
+    
+      set hive.mapred.mode=strict;
+      select * from t1;
+      FAILED: SemanticException [Error 10041]: No partition predicate found for Alias "t1" Table "t1"
+      select * from t1 where country="india";
+       1       {"mounika":"800000"}    india
+       
+     2. IT RESTRICTS USE OF ORDER BY CLAUSE WITHOUT LIMIT(IN ORDER BY A SINGLE REDUCER WILL BE USED WHICH REDUCES THE PERORMANCE)
+     
+     select * from tt1 order by iD;
+     FAILED: SemanticException 1:27 In strict mode, if ORDER BY is specified, LIMIT must also be specified. Error encountered near token 'id'
+     
+     SELECT * FROM TT1 ORDER BY ID LIMIT 4;
+     1       {"mounika":"800000"}    india
+     2       {"satya":"1000000"}     us
