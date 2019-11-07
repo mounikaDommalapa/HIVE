@@ -1,0 +1,59 @@
+COLUMNS:
+
+  1.  You can rename table and column of existing Hive tables.
+  2. You can add new column to the table.
+  3. Rename Hive table column.
+  4. Add or drop table partition.
+  5. Add Hadoop archive option to Hive table.
+  
+  
+  RENAME TANBLE:
+  
+  alter table t2 rename to t3;
+  
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t2   
+Found 1 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t2/country=india
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3
+Found 1 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=india
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t2
+ls: `hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t2': No such file or directory
+[mounikachowdary1245666@cxln4 ~]$ 
+
+  ADD NEW COLUMNS TO A TABLE;
+  
+  ALTER TABLE T3 ADD COLUMNS (STATE STRING);
+  
+1       mounika NULL    india
+2       faizan  NULL    india
+3       ty      NULL    india
+4       tim     NULL    india
+5       murali  NULL    india
+
+LOAD DATA LOCAL INPATH 'file11' OVERWRITE INTO TABLE T3 PARTITION(COUNTRY="INDIA");
+
+1       mounika india   INDIA
+2       faizan  pakistan        INDIA
+3       ty      us      INDIA
+4       tim     us      INDIA
+5       murali  india   INDIA
+1       mounika NULL    india
+2       faizan  NULL    india
+3       ty      NULL    india
+4       tim     NULL    india
+5       murali  NULL    india
+
+  RENAME HIVE COLUMN;
+  
+    ALTER TABLE T3 CHANGE COLUMN STATE STATEOFEMP STRING;
+    
+    id                      int                                         
+name                    string                                      
+stateofemp              string                                      
+country                 string                                      
+                 
+# Partition Information          
+# col_name              data_type               comment             
+                 
+country                 string            
