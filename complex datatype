@@ -1,0 +1,84 @@
+COMPLEX DATATYPES:
+
+  MAP
+    CREATE TABLE C11 (OTHERS MAP<INT,STRING>,NAME STRING)
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY '|'
+    COLLECTION ITEMS TERMINATED BY ','
+    
+    we cannot directly insert the complex data into the table we need to create a dummy table at least with single row.
+    
+    create table dummmy (id int, name string);
+    insert into table dummy (1,"mouni");
+    
+    insert into table c11 select map(1,"mounika"),"project" from dummy; {1:"mouni"}     project
+    
+    FILE7:
+    1,MOUNI|MOUNI
+    2,SAI|SONU
+    3,KUMAR|SRI
+    
+    LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/FILE7' INTO TABLE C11;
+    {1:null}        MOUNI
+    {2:null}        SONU
+    {3:null}        SRI
+  
+  ARRAY:
+    
+    CREATE TABLE C12 (NAMES ARRAY<STRING>) 
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY '|'
+    COLLECTION ITEMS TERMINATED BY ','
+    
+    INSERT INTO TABLE C12 SELECT ARRAY("MOUNIKA","NG") FROM DUMMY;["MOUNIKA","NG"]
+    
+    FILE2:
+    1,mounika
+    2,sekhar
+    3,murali
+    4,mummy
+    
+    LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/file2' INTO TABLE C12;
+    ["1","mounika"]
+    ["2","sekhar"]
+    ["3","murali"]
+    ["4","mummy"]
+    
+    SELECT NAMES[0] FROM C12;
+    MOUNIKA
+    1
+    2
+    3
+    4
+    
+ STRUCT
+ 
+    CREATE TABLE C13 (NAME STRUCT<ID:INT,NAME:STRING>)
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY '|'
+    COLLECTION ITEMS TERMINATED BY ','
+    
+    INSERT INTO TABLE C13 SELECT NAMED_STRUCT("ID",1,"NAME","MOUNIKA") FROM DUMMY;
+    
+    {"id":1,"name":"MOUNIKA"}
+    
+    LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/file2' INTO TABLE C13
+    {"id":1,"name":"mounika"}
+    {"id":2,"name":"sekhar"}
+    {"id":3,"name":"murali"}
+    {"id":4,"name":"mummy"}
+    
+    SELECT NAME.ID FROM C13;
+    1
+    1
+    2
+    3
+    4
+
+
+    SELECT NAME.NAME FROM C13;
+    MOUNIKA
+    mounika
+    sekhar
+    murali
+    mummy
