@@ -59,3 +59,52 @@ Found 3 items
 
 DYNAMIC PARTITIONING:
 
+    we cannot directly load the data from file to partitioned table
+    
+    INTERMEDIATE TABLE
+    
+    CREATE TABLE TT1 (ID INT,NAME MAP<STRING,STRING>,COUNTRY STRING)
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY '|'
+    MAP KEYS TERMINATED BY ','
+
+     LOAD DATA LOCAL INPATH '/home/mounikachowdary1245666/file10' into table tt1;
+     
+      SELECT * FROM TT1;
+      
+      1       {"mounika":"800000"}    india
+      2       {"satya":"1000000"}     us
+      
+      
+      INSERT INTO TABLE T1 PARTITION(COUNTRY) SELECT ID,NAME,COUNTRY FROM TT1;
+      
+      SELECT * FROM T1;
+      1       {"MOUNIKA":"800000"}    INDIA
+      1       {"\"mounika\"":"\"800000\""}    INDIA
+      2       {"\"satya\"":"\"1000000\""}     INDIA
+      1       {"mounika":"800000"}    INDIA
+      2       {"satya":"1000000"}     INDIA
+      1       {"mounika":"800000"}    india
+      2       {"satya":"1000000"}     us
+      
+      
+      [mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/
+Found 3 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 04:10 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=INDIA
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 04:29 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=india
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 04:29 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t1/country=us
+[mounikachowdary1245666@cxln4 ~]$ 
+
+PROPERTIES TO SE TO ALLOW DYNAMIC PARTITIONING:
+SET HIVE.EXEC.DYNAMIC.PARTITION=TRUE
+SET HIVE.EXEC.DYNAMIC.PARTITION.MODE=NONSTRICT;
+
+
+
+      
+      
+      
+      
+      
+      
+      
