@@ -57,3 +57,59 @@ country                 string
 # col_name              data_type               comment             
                  
 country                 string            
+
+
+ADD PARTITION TO A TABLE
+
+ALTER TABLE T3 ADD PARTITION(COUNTRY="US");
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3 
+Found 3 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:59 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=INDIA
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 03:28 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=india
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=us
+ls: `hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=us': No such file or directory
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US
+
+LOAD DATA LOCAL INPATH "FILE11" INTO TABLE T3 PARTITION(COUNTRY="US");
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3 
+Found 3 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:59 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=INDIA
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 03:31 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=india
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US
+Found 1 items
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         66 2019-11-08 03:31 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US/fi
+le11
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -cat hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US/file11
+1,mounika,india
+2,faizan,pakistan
+3,ty,us
+4,tim,us
+5,murali,india
+
+ALTER TABLE T3 ADD PARTITION(CITY);
+
+hive (mounika)> ALTER TABLE T3 ADD PARTITION(CITY);
+FAILED: ValidationFailureSemanticException Partition spec {city=null} contains non-partition columns
+hive (mounika)> ALTER TABLE T3 ADD PARTITION(CITY="ATP");
+FAILED: ValidationFailureSemanticException Partition spec {city=ATP} contains non-partition columns
+hive (mounika)> ALTER TABLE T3 ADD PARTITION(STATE="ATP");
+FAILED: ValidationFailureSemanticException Partition spec {state=ATP} contains non-partition columns
+hive (mounika)> ALTER TABLE T3 ADD PARTITION(ID=1);
+FAILED: ValidationFailureSemanticException Partition spec {id=1} contains non-partition columns
+
+DROP PARTITION:
+
+ALTER TABLE T3 DROP PARTITION(COUNTRY="INDIA");
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3 
+Found 2 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 03:31 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=india
+[mounikachowdary1245666@cxln4 ~]$ 
+
+
+
+
