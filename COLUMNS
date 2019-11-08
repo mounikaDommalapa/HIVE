@@ -112,4 +112,426 @@ drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://
 
 
 
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL#LanguageManualDDL-AlterTable
 
+CHANGE TABLE PROPERTIES;
+
+ALTER TABLE T3 SET TBLPROPERTIES("EXTERNAL"="TRUE");
+
+hive (mounika)> DESCRIBE FORMATTED T3;
+OK
+# col_name              data_type               comment             
+                 
+id                      int                                         
+name                    string                                      
+stateofemp              string                                      
+                 
+# Partition Information          
+# col_name              data_type               comment             
+                 
+country                 string                                      
+                 
+# Detailed Table Information             
+Database:               mounika                  
+Owner:                  mounikachowdary1245666   
+CreateTime:             Thu Nov 07 17:49:34 UTC 2019     
+LastAccessTime:         UNKNOWN                  
+Protect Mode:           None                     
+Retention:              0                        
+Location:               hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3     
+Table Type:             EXTERNAL_TABLE           
+Table Parameters:                
+        EXTERNAL                TRUE                
+        last_modified_by        mounikachowdary1245666
+        last_modified_time      1573184753          
+        transient_lastDdlTime   1573184753          
+                 
+# Storage Information            
+SerDe Library:          org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       
+InputFormat:            org.apache.hadoop.mapred.TextInputFormat      
+
+CHANGE COMMENT:
+
+ALTER TABLE T3 SET TBLPROPERTIES("COMMENT"="THIS IS A HIVE TABLE");
+
+stateofemp              string                                      
+                 
+# Partition Information          
+# col_name              data_type               comment             
+                 
+country                 string                                      
+                 
+# Detailed Table Information             
+Database:               mounika                  
+Owner:                  mounikachowdary1245666   
+CreateTime:             Thu Nov 07 17:49:34 UTC 2019     
+LastAccessTime:         UNKNOWN                  
+Protect Mode:           None                     
+Retention:              0                        
+Location:               hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3     
+Table Type:             EXTERNAL_TABLE           
+Table Parameters:                
+        COMMENT                 THIS IS A HIVE TABLE
+        EXTERNAL                TRUE                
+        last_modified_by        mounikachowdary1245666
+        last_modified_time      1573184870          
+        transient_lastDdlTime   1573184870          
+                 
+# Storage Information            
+SerDe Library:          org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       
+InputFormat:            org.apache.hadoop.mapred.TextInputFormat         
+OutputFormat:           org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat       
+Compressed:             No                       
+Num Buckets:            -1                       
+Bucket Columns:         []                       
+Sort Columns:           []                       
+Storage Desc Params:             
+        field.delim             ,                   
+        serialization.format    ,                   
+Time taken: 0.367 seconds, Fetched: 38 row(s)
+
+CREATE TABLE T4 (ID INT) location 'hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/database'
+              
+ alter table t4 rename to t5;
+ 
+ hive (mounika)> describe formatted
+              > t5;
+OK
+# col_name              data_type               comment             
+                 
+id                      int                                         
+                 
+# Detailed Table Information             
+Database:               mounika                  
+Owner:                  mounikachowdary1245666   
+CreateTime:             Fri Nov 08 03:53:33 UTC 2019     
+LastAccessTime:         UNKNOWN                  
+Protect Mode:           None                     
+Retention:              0                        
+Location:               hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t5     
+Table Type:             MANAGED_TABLE            
+Table Parameters:                
+        last_modified_by        mounikachowdary1245666
+        last_modified_time      1573185321          
+        numFiles                2                   
+        totalSize               4                   
+        transient_lastDdlTime   1573185321          
+                 
+# Storage Information            
+SerDe Library:          org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       
+InputFormat:            org.apache.hadoop.mapred.TextInputFormat         
+OutputFormat:           org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat       
+Compressed:             No                       
+Num Buckets:            -1                       
+Bucket Columns:         []                       
+Sort Columns:           []                       
+Storage Desc Params:             
+        serialization.format    1                   
+        
+    CHANGE LOCATION OF THE TABLE
+    
+      ALTER TABLE T6 SET LOCATION 'hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/database'
+      
+      hive (mounika)> describe formatted t6;
+OK
+# col_name              data_type               comment             
+                 
+id                      int                                         
+                 
+# Detailed Table Information             
+Database:               mounika                  
+Owner:                  mounikachowdary1245666   
+CreateTime:             Fri Nov 08 03:53:33 UTC 2019     
+LastAccessTime:         UNKNOWN                  
+Protect Mode:           None                     
+Retention:              0                        
+Location:               hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/database  
+Table Type:             MANAGED_TABLE            
+Table Parameters:                
+        last_modified_by        mounikachowdary1245666
+        last_modified_time      1573185782          
+        location                hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/database
+        numFiles                0                   
+        totalSize               0                   
+        transient_lastDdlTime   1573185782          
+                 
+# Storage Information            
+SerDe Library:          org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       
+InputFormat:            org.apache.hadoop.mapred.TextInputFormat         
+OutputFormat:           org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat       
+Compressed:             No                       
+Num Buckets:            -1                       
+Bucket Columns:         []                       
+Sort Columns:           []                       
+Storage Desc Params:             
+        serialization.format    1                   
+Time taken: 0.353 seconds, Fetched: 31 row(s)
+
+
+******************************************************************************************************************************
+
+CREATE TABLE T7 (ID INT);
+
+INSERT INTO TABLE T7 VALUES(1);
+INSERT INTO TABLE T7 VALUES(1);
+
+ALTER TABLE T7 SET TBLPROPERTIES('immutable'='true');
+
+hive (mounika)> insert into table t7 values (2);
+FAILED: SemanticException [Error 10256]: Inserting into a non-empty immutable table is not allowed t7
+hive (mounika)> 
+
+************************************************************************************************************************************
+
+
+CREATE TABLE T8 (ID INT,NAME STRING,STATE STRING,COUNTRY STRING);
+
+LOAD DATA LOCAL INPATH FILE11 INTO TABLE T8;
+hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8
+Found 1 items
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         66 2019-11-08 04:11 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8/file11
+
+ALTER TABLE T8 CLUSTERED BY (STATE) INTO 3 BUCKETS;
+
+                 
+id                      int                                         
+name                    string                                      
+state                   string                                      
+country                 string                                      
+                 
+# Detailed Table Information             
+Database:               mounika                  
+Owner:                  mounikachowdary1245666   
+CreateTime:             Fri Nov 08 04:10:48 UTC 2019     
+LastAccessTime:         UNKNOWN                  
+Protect Mode:           None                     
+Retention:              0                        
+Location:               hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8     
+Table Type:             MANAGED_TABLE            
+Table Parameters:                
+        last_modified_by        mounikachowdary1245666
+        last_modified_time      1573186331          
+        numFiles                6                   
+        numRows                 0                   
+        rawDataSize             0                   
+        totalSize               363                 
+        transient_lastDdlTime   1573186608          
+                 
+# Storage Information            
+SerDe Library:          org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       
+InputFormat:            org.apache.hadoop.mapred.TextInputFormat         
+OutputFormat:           org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat       
+Compressed:             No                       
+Num Buckets:            3                        
+Bucket Columns:         [state]                  
+Sort Columns:           []                       
+Storage Desc Params:             
+        serialization.format    1                   
+Time taken: 0.389 seconds, Fetched: 35 row(s)
+
+
+INSERT INTO TABLE T8 SELECT * FROM T4;
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8
+Found 6 items
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         84 2019-11-08 04:16 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8/000000_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         81 2019-11-08 04:16 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8/000001_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop          0 2019-11-08 04:16 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8/000002_0
+-rwxrwxrwx   3 mounikachowdary1245666 hadoop         66 2019-11-08 04:11 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t8/file11
+
+*************************************************************************************************************************************
+
+CREATE TABLE A1 (ID INT,NAME STRING,STATE STRING)
+PARTITIONED BY (COUNTRY STRING)
+ROW FORMAT FDELIMITED 
+FIELDS TERMINATED BY ','
+
+
+PARTITIONS:
+
+  ADD PARTITION:
+
+    ALTER TABLE A1 ADD PARTITION (COUNTRY="US") LOCATION 'hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/database'
+    
+    [mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1
+Found 2 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:35 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=india
+-rw-r--r--   3 mounikachowdary1245666 hadoop         27 2019-11-08 04:37 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=us
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/database
+Found 1 items
+-rwxr-xr-x   3 mounikachowdary1245666 mounikachowdary1245666         14 2019-11-08 04:45 hdfs://cxln1.c.thelab-240901.internal:8020/user/mounikachowdary1245666/dat
+abase/000000_0
+[mounikachowdary1245666@cxln4 ~]$ 
+
+ADD MULTIPLE PARTITIONS AT A TIME
+
+ALTER TABLE A1 ADD PARTITION(COUNTRY="US") PARTITION(COUNTRY="MS");
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. AlreadyExistsException(message:Partition already exists: Partition(values:[US],
+ dbName:mounika, tableName:a1, createTime:0, lastAccessTime:0, sd:StorageDescriptor(cols:[FieldSchema(name:id, type:int, comment:null), FieldSchema(name:name, type
+:string, comment:null), FieldSchema(name:state, type:string, comment:null)], location:null, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.
+apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.ser
+de2.lazy.LazySimpleSerDe, parameters:{serialization.format=,, field.delim=,}), bucketCols:[], sortCols:[], parameters:{}, skewedInfo:SkewedInfo(skewedColNames:[], 
+skewedColValues:[], skewedColValueLocationMaps:{}), storedAsSubDirectories:false), parameters:{totalSize=0, numRows=0, rawDataSize=0, COLUMN_STATS_ACCURATE={"BASIC
+_STATS":"true"}, numFiles=0}))
+
+ALTER TABLE A1 ADD IF NOT EXISTS PARTITION(COUNTRY="US") PARTITION(COUNTRY="MS");
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1
+Found 3 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:50 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MS
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:35 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=india
+-rw-r--r--   3 mounikachowdary1245666 hadoop         27 2019-11-08 04:37 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=us
+[mounikachowdary1245666@cxln4 ~]$ 
+
+*************************************************************************************************************************************
+
+RENAME PARTITION
+
+ALTER TABLE A1 PARTITION(COUNTRY="india") RENAM TO PARTITION(COUNTRY="mounika");
+
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1
+Found 4 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:45 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MOUNI
+KA
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:50 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MS
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:35 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=india
+-rw-r--r--   3 mounikachowdary1245666 hadoop         27 2019-11-08 04:37 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=us
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1
+Found 4 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:45 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MOUNI
+KA
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:35 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MOUNI
+KA1
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:50 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MS
+-rw-r--r--   3 mounikachowdary1245666 hadoop         27 2019-11-08 04:37 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=us
+[mounikachowdary1245666@cxln4 ~]$ 
+
+**************************************************************************************************************************************
+EXCHANGE PARTITION
+
+    ALTER TABLE A1 EXCHANGE PARTITION(COUNTRY="india") WITH TABLE T3;
+    
+    
+    SCHEMA MUST BE SAM EBETWEEN THE TWO TABLES.
+    
+    [mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3
+Found 2 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 03:31 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=india
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1
+Found 5 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:45 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MOUNI
+KA
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:35 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MOUNI
+KA1
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 04:50 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=MS
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-07 17:53 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=india
+-rw-r--r--   3 mounikachowdary1245666 hadoop         27 2019-11-08 04:37 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/a1/country=us
+[mounikachowdary1245666@cxln4 ~]$ 
+[mounikachowdary1245666@cxln4 ~]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3
+Found 1 items
+drwxrwxrwx   - mounikachowdary1245666 hadoop          0 2019-11-08 03:31 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/t3/country=US
+[mounikachowdary1245666@cxln4 ~]$
+
+********************************************************************************************************************************
+
+MSCK REPAIR TABLE:
+
+
+    IF WE ADD THE FILES DIRECLTY TO HDFS THEN WE NEED TO DO MSCK OR ADD PARTITION TO REFLECT THE CHANGES IN METASTORE
+    
+    EXAMPLE;
+     create table hadoop1 (id int)
+              > partitioned by (name string)
+              > row format delimited
+              > fields terminated by ',';
+              
+              [mounikachowdary1245666@cxln4 ~]$ cd name\=mounika/
+[mounikachowdary1245666@cxln4 name=mounika]$ ls
+file1
+[mounikachowdary1245666@cxln4 name=mounika]$ cat file1
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+[mounikachowdary1245666@cxln4 name=mounika]$ hdfs dfs -copyFromLocal ../name=mounika hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/hado
+op1
+[mounikachowdary1245666@cxln4 name=mounika]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/hadoop1/id=1
+Found 1 items
+-rw-r--r--   3 mounikachowdary1245666 hadoop         17 2019-11-08 05:31 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/hadoop1/id=1/fil
+e1
+[mounikachowdary1245666@cxln4 name=mounika]$ hdfs dfs -ls hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/hadoop1/
+Found 2 items
+drwxr-xr-x   - mounikachowdary1245666 hadoop          0 2019-11-08 05:31 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/hadoop1/id=1
+drwxr-xr-x   - mounikachowdary1245666 hadoop          0 2019-11-08 05:35 hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/hadoop1/name=mou
+nika
+
+alter table hadoop1 add partition(name="mounika");
+
+hive (mounika)> select * from hadoop1
+              > ;
+OK
+1       mounika
+2       mounika
+3       mounika
+4       mounika
+5       mounika
+6       mounika
+7       mounika
+8       mounika
+9       mounika
+[mounikachowdary1245666@cxln4 name=mounika]$ cd ..
+[mounikachowdary1245666@cxln4 ~]$ cd name\=murali/
+[mounikachowdary1245666@cxln4 name=murali]$ ls
+file1
+[mounikachowdary1245666@cxln4 name=murali]$ cat file1
+1
+2
+3
+4
+6
+6
+7
+8
+9
+
+
+[mounikachowdary1245666@cxln4 name=murali]$ hdfs dfs -copyFromLocal ../name=murali hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/mounika.db/hadoop
+1
+
+msck repair table hadoop1;
+OK
+Partitions not in metastore:    hadoop1:name=murali
+Repair: Added partition to metastore hadoop1:name=murali
+Time taken: 0.629 seconds, Fetched: 2 row(s)
+
+hive (mounika)> select * from hadoop1;
+OK
+1       mounika
+2       mounika
+3       mounika
+4       mounika
+5       mounika
+6       mounika
+7       mounika
+8       mounika
+9       mounika
+1       murali
+2       murali
+3       murali
+4       murali
+NULL    murali
+6       murali
+6       murali
+7       murali
+
+********************************************************************************************************************************** 
+    
+    
+    
