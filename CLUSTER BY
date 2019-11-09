@@ -1,0 +1,25 @@
+CLUSTER BY
+
+  IT IS THE COMBINATION OF DISTRIBUTED BY AND SORT BY
+  
+  EXAMPLE
+  
+      INSERT OVERWRITE LOCAL DIRECTORY 'GROUPING2'
+      ROW FORMAT DELIMITED
+      FIELDS TERMINATED BY ','
+      SELECT * FROM T6 CLUSTER BY ID
+      
+      
+[mounikachowdary1245666@cxln4 GROUPING2]$ cat 000000_0 
+2,faizan,pakistan,US
+4,tim,us,US
+6,mounika,us,india
+8,uha,uk,india
+[mounikachowdary1245666@cxln4 GROUPING2]$ cat 000001_0 
+1,mounika,india,US
+1,\N,\N,\N
+1,\N,\N,\N
+3,ty,us,US
+5,murali,india,US
+7,MOUNIKA,hyderabad,america
+7,murali,us,india
