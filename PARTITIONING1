@@ -1,0 +1,119 @@
+CREATE DATABASE PARTITIONEX
+COMMENT "FOR PARTITIONS"
+WITH DBPROPERTIES("OWNER"="MOUNIKA");
+
+
+DISCOVER PARTITIONS:
+
+EXTERNAL TABLE
+
+  CREATE EXTERNAL TABLE E1 (ID INT)
+  PARTITIONED BY (NAME STRING)
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ','
+  
+  
+  DECSRIBE FORMATTED E1;
+  
+  OK
+# col_name              data_type               comment             
+                 
+id                      int                                         
+                 
+# Partition Information          
+# col_name              data_type               comment             
+                 
+name                    string                                      
+                 
+# Detailed Table Information             
+Database:               partitionsex             
+Owner:                  mounikachowdary1245666   
+CreateTime:             Fri Nov 08 18:46:21 UTC 2019     
+LastAccessTime:         UNKNOWN                  
+Protect Mode:           None                     
+Retention:              0                        
+Location:               hdfs://cxln1.c.thelab-240901.internal:8020/apps/hive/warehouse/partitionsex.db/e1        
+Table Type:             EXTERNAL_TABLE           
+Table Parameters:                
+        EXTERNAL                TRUE                
+        transient_lastDdlTime   1573238781          
+                 
+# Storage Information            
+SerDe Library:          org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       
+InputFormat:            org.apache.hadoop.mapred.TextInputFormat         
+OutputFormat:           org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat       
+Compressed:             No                       
+Num Buckets:            -1                       
+Bucket Columns:         []                       
+Sort Columns:           []                       
+Storage Desc Params:             
+        field.delim             ,                   
+        serialization.format    ,                   
+Time taken: 0.369 seconds, Fetched: 33 row(s)
+*************************************************************************************************************************************
+OFFLINE:
+
+ALTER TABLE E1 PARTITION(NAME="MOUNIKA") ENABLE OFFLINE;
+
+hive (PARTITIONSEX)> select * from e1;
+FAILED: SemanticException [Error 10113]: Query against an offline table or partition Table e1 Partition name=mounika
+hive (PARTITIONSEX)> 
+
+ALTER TABLE E1 PARTITION(NAME="MOUNIKA") DISABLE OFFLINE;
+
+
+hive (PARTITIONSEX)> ALTER TABLE E1 PARTITION(NAME="mounika") ENABLE NO_DROP;
+OK
+Time taken: 0.788 seconds
+hive (PARTITIONSEX)> DROP TABLE E1;
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. Table e1 Partitionname=mounika is protected from being dropped
+hive (PARTITIONSEX)> 
+
+hive (PARTITIONSEX)> DROP TABLE E1;
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. Table e1 Partitionname=mounika is protected from being dropped
+hive (PARTITIONSEX)> ALTER TABLE E1 DROP PARTITION(NAME="mounika");
+FAILED: SemanticException [Error 30011]: Partition protected from being dropped partitionsex@e1@name=mounika
+hive (PARTITIONSEX)> ALTER TABLE E1 DROP PARTITION(NAME="mounika") IGNORE PROTECTION;
+Dropped the partition name=mounika
+OK
+Time taken: 0.522 seconds
+hive (PARTITIONSEX)> 
+
+*********************************************************************************************************************************
+
+NO_DROP CASCADE
+
+  
+    ALTER TABLE E1 ENABLE NO_DROP
+    
+    ALTER TABLE E1 DROP PARTITION(NAME="mounika");
+    Dropped the partition name=mounika
+OK
+Time taken: 0.525 seconds
+hive (PARTITIONSEX)> 
+
+ALTER TABLE E1 DISABLE NO_DROP;
+
+hive (PARTITIONSEX)> ALTER TABLE E1 ENABLE NO_DROP CASCADE;
+OK
+Time taken: 0.259 secondS
+hive (PARTITIONSEX)> MSCK REPAIR TABLE E1;
+OK
+Partitions not in metastore:    e1:name=mounika
+Repair: Added partition to metastore E1:name=mounika
+Time taken: 0.615 seconds, Fetched: 2 row(s)
+hive (PARTITIONSEX)> ALTER TABLE E1 DROP PARTITION(NAME="mounika");
+FAILED: SemanticException [Error 30011]: Partition protected from being dropped partitionsex@e1@name=mounika
+hive (PARTITIONSEX)> alter table e1 drop partition(name="mounika") ignore protection;
+Dropped the partition name=mounika
+OK
+Time taken: 0.497 seconds
+hive (PARTITIONSEX)> 
+
+***********************************************************************************************************************************
+
+
+
+
+
+
