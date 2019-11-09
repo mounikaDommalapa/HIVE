@@ -1,0 +1,51 @@
+DISTRIBUTE BY
+
+      IT WILL DISTRIBUTE THE VALUES OF THE SPECIFIED COLUMN INTO THE REDUCERS. ALL THE SAME VALUES WILL GO THROUGH THE SINGLE REDUCER.
+  
+  
+  EXAMPLE;
+  
+      INSERT OVERWRITE LOCAL DIRECTORY 'GROUPING'
+      ROW FORMAT DELIMITED
+      FIELDS TERMINATED BY ','
+      SELECT * FROM T6 DISTRIBUTE BY NAME;
+      
+[mounikachowdary1245666@cxln4 grouping]$ ls
+000000_0  000001_0
+[mounikachowdary1245666@cxln4 grouping]$ cat 000000_0
+8,uha,uk,india
+6,mounika,us,india
+4,tim,us,US
+2,faizan,pakistan,US
+[mounikachowdary1245666@cxln4 grouping]$ cat 000001_0
+7,MOUNIKA,hyderabad,america
+7,murali,us,india
+5,murali,india,US
+3,ty,us,US
+1,mounika,india,US
+1,\N,\N,\N
+1,\N,\N,\N
+
+    EXAMPLE1:
+    
+    INSERT OVERWRITE LOCAL DIRECTORY 'GROUPING1'
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    SELECT * FROM T6 DISTRIBUTE BY NAME
+    SORT BY ID;
+    
+    
+[mounikachowdary1245666@cxln4 GROUPING1]$ cat 000000_0 
+1,mounika,india,US
+1,\N,\N,\N
+1,\N,\N,\N
+4,tim,us,US
+5,murali,india,US
+6,mounika,us,india
+7,MOUNIKA,hyderabad,america
+7,murali,us,india
+8,uha,uk,india
+[mounikachowdary1245666@cxln4 GROUPING1]$ cat 000001_0 
+2,faizan,pakistan,US
+3,ty,us,US
+[mounikachowdary1245666@cxln4 GROUPING1]$
