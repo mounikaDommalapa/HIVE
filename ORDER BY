@@ -1,0 +1,57 @@
+ORDER BY
+
+  SYNTAX: 
+  
+    colOrder: ( ASC | DESC )
+    colNullOrder: (NULLS FIRST | NULLS LAST)           -- (Note: Available in Hive 2.1.0 and later)
+    orderBy: ORDER BY colName colOrder? colNullOrder? (',' colName colOrder? colNullOrder?)*
+    query: SELECT expression (',' expression)* FROM src orderBy
+    
+    EXAMPLE:
+    
+        SELECT * FROM T3 ORDER BY COUNTRY;
+        
+5       murali  india   US
+4       tim     us      US
+3       ty      us      US
+2       faizan  pakistan        US
+1       mounika india   US
+8       uha     uk      india
+7       murali  us      india
+6       mounika us      india
+
+
+        SELECT * FROM T3 ORDER BY COUNTRY,STATEOFEMP;
+        
+5       murali  india   US
+1       mounika india   US
+2       faizan  pakistan        US
+4       tim     us      US
+3       ty      us      US
+8       uha     uk      india
+7       murali  us      india
+6       mounika us      india
+
+
+ASCIII A-Z 65 TO 90
+ASCII a-z 97 TO 122
+
+EXAMPLE:
+
+BY DEFAULT IT WILL SORT THE THINGS IN ASC ITH NULLFIRST
+
+    SELECT * FROM T6 ORDER BY COUNTRY;
+    
+1       NULL    NULL    NULL
+1       NULL    NULL    NULL
+5       murali  india   US
+4       tim     us      US
+3       ty      us      US
+2       faizan  pakistan        US
+1       mounika india   US
+7       MOUNIKA hyderabad       america
+8       uha     uk      india
+7       murali  us      india
+6       mounika us      india
+Time taken: 23.895 seconds, Fetched: 11 row(s)
+hive> 
