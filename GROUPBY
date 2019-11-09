@@ -1,0 +1,49 @@
+GROUPBY
+
+SYNTAX:
+
+SELECT C1,C2 ..... FROM TABLENAME GROUP BY COLUMN NAME;
+
+EXAMPLE:
+
+SELECT COUNTRY,COUNT(*) FROM T3;
+US      5
+india   3
+
+SELECT COUNTRY,COUNT(*),STATE FROM T3 GROUP BY COUNTRY; 
+FAILED: SemanticException [Error 10025]: Line 1:24 Expression not in GROUP BY key 'STATE'
+
+TO SOLVE THE ISSUE WE HAVE 2 OPTIONS.
+
+OPTION1:
+
+  ADD THE COLUMN IN THE GROUPBY
+  
+  SELECT COUNTRY,COUNT(*),STATE FROM T3 GROUP BY COUNTRY,STATE;
+  
+  US      2       india
+US      1       pakistan
+US      2       us
+india   1       uk
+india   2       us
+
+BUT THIS MAY NOT PROVIDE THE DESIRED OUTPUT.
+
+OPTION2:
+
+COLLECT_SET 
+  
+  SELECT COUNTRY,COUNTRY(*) ,COLLECT_SET(STATEOFEMP) FROM T3 GROUP BY COUNRTY;
+  US      5       ["india","pakistan","us"]
+india   3       ["us","uk"]
+
+THIS WILL REMOVE THE DUPLICATES
+
+COLLECT_LIST;
+
+THIS WILL HOLD THE DUPLICATES AS WELL.
+
+SELECT COUNTRY,COUNT(*) ,COLLECT_LIST(STATEOFEMP) FROM T3 GROUP BY COUNTRY;
+
+US      5       ["india","pakistan","us","us","india"]
+india   3       ["us","us","uk"]
