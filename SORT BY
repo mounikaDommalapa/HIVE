@@ -1,0 +1,42 @@
+SORT BY
+
+    colOrder: ( ASC | DESC )
+    sortBy: SORT BY colName colOrder? (',' colName colOrder?)*
+    query: SELECT expression (',' expression)* FROM src sortBy
+    
+    
+    SORT THE DATA WITHIN THE REDUCERS. WE CANNOT EXPECT THE PROPER SORTED OUTPUT
+    
+    SET MAPREDUCE.JOB.REDUCES=2 TO SET THE NUMBER OF REDUCERS
+    
+    SELECT * FROM T6 SORT BY ID;
+    
+1       mounika india   US
+1       NULL    NULL    NULL
+2       faizan  pakistan        US
+3       ty      us      US
+6       mounika us      india
+7       MOUNIKA hyderabad       america
+8       uha     uk      india
+1       NULL    NULL    NULL
+4       tim     us      US
+5       murali  india   US
+7       murali  us      india
+
+
+      SELECT * FROM T6 SORT BY ID DESC;
+      
+8       uha     uk      india
+7       MOUNIKA hyderabad       america
+6       mounika us      india
+3       ty      us      US
+2       faizan  pakistan        US
+1       mounika india   US
+1       NULL    NULL    NULL
+7       murali  us      india
+5       murali  india   US
+4       tim     us      US
+1       NULL    NULL    NULL
+
+
+      
