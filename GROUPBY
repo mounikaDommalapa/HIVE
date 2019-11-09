@@ -47,3 +47,12 @@ SELECT COUNTRY,COUNT(*) ,COLLECT_LIST(STATEOFEMP) FROM T3 GROUP BY COUNTRY;
 
 US      5       ["india","pakistan","us","us","india"]
 india   3       ["us","us","uk"]
+
+
+POSITION BASED;
+
+ set hive.groupby.orderby.position.alias=TRUE;
+ 
+ SELECT COUNT(*),COUNTRY FROM T3 GROUP BY 2;
+ 5       US
+3       india
