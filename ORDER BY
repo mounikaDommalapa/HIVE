@@ -55,3 +55,24 @@ BY DEFAULT IT WILL SORT THE THINGS IN ASC ITH NULLFIRST
 6       mounika us      india
 Time taken: 23.895 seconds, Fetched: 11 row(s)
 hive> 
+***********************************************************************************************************************************
+
+ SET HIVE.GROUPBY.ORDERBY.POSITION.ALIAS=TRUE;
+ 
+ SELECT * FROM T6 ORDER BY 1;
+ 
+ FAILED: SemanticException [Error 10219]: Position in ORDER BY is not supported when using SELECT *
+ 
+ SELECT ID,NAME,STATE,COUNTRY FROM T6 ORDER BY 1;
+ 
+ 1       mounika india   US
+1       NULL    NULL    NULL
+1       NULL    NULL    NULL
+2       faizan  pakistan        US
+3       ty      us      US
+4       tim     us      US
+5       murali  india   US
+6       mounika us      india
+7       MOUNIKA hyderabad       america
+7       murali  us      india
+8       uha     uk      india
