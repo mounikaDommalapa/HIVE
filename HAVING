@@ -1,0 +1,22 @@
+HAVING
+
+
+    HAVING MUST BE USED WITH THE GROUPING CLAUSE
+    SELECT * FROM T6 HAVING ID>1;
+    FAILED: SemanticException HAVING specified without GROUP BY
+    
+    SELECT ID,COUNT(*) FROM T6 GROUP BY ID HAVING ID >1;
+2       1
+3       1
+4       1
+5       1
+6       1
+7       2
+8       1
+
+    SELECT * FROM T6 HAVING ID>1 GROUP BY ID;
+    FAILED: ParseException line 1:29 missing EOF at 'GROUP' near '1'
+    
+    SELECT ID,COUNT(*) FROM T6 WHERE NAME="mounika" GROUP BY ID HAVING ID>1;
+    
+    
