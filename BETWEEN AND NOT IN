@@ -1,0 +1,66 @@
+BETWEEN
+
+    SELECT * FROM T6 WHERE ID BETWEEN 1 AND 4;
+    
+1       NULL    NULL    NULL
+1       NULL    NULL    NULL
+1       mounika india   US
+2       faizan  pakistan        US
+3       ty      us      US
+4       tim     us      US
+
+    
+ NOT BETWEEN
+ 
+ 
+      SELECT * FROM T6 WHERE ID NOT BETWEEN 1 AND 4;
+      
+5       murali  india   US
+6       mounika us      india
+7       murali  us      india
+8       uha     uk      india
+7       MOUNIKA hyderabad       america
+
+IN
+
+        SELCT * FROM T6 WHERE ID IN (1,4,6,7)
+        
+1       NULL    NULL    NULL
+1       NULL    NULL    NULL
+1       mounika india   US
+4       tim     us      US
+6       mounika us      india
+7       murali  us      india
+7       MOUNIKA hyderabad       america
+
+
+NOT IN
+
+     SELECT * FROM T6 WHERE NOT ID IN (1,2,3);
+     
+4       tim     us      US
+5       murali  india   US
+6       mounika us      india
+7       murali  us      india
+8       uha     uk      india
+7       MOUNIKA hyderabad       america
+
+      SELECT * FROM T6 WHERE ID NOT IN (1,2,3)
+      
+
+4       tim     us      US
+5       murali  india   US
+6       mounika us      india
+7       murali  us      india
+8       uha     uk      india
+7       MOUNIKA hyderabad       america
+
+
+EXAMPLES:
+
+      SELECT * FROM T6 WHERE ID BETWEEN 1 AND 4 AND NAME NOT IN("tim");
+      
+      
+1       mounika india   US
+2       faizan  pakistan        US
+3       ty      us      US
