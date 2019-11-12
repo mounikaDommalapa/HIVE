@@ -1,0 +1,7 @@
+MULTI TABLE INSERT
+
+from dummy
+    > insert overwrite table l1
+    > select id,"mounika" 
+    > insert into table l2 
+    > select id,name;
