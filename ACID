@@ -1,0 +1,76 @@
+ACID
+
+
+    Atomicity:transactions must complete succssfully  or fail complrtely
+    Consistancy:once an application performs an operation the results of that operation are visible to it in every subsequent operation
+    Isolation:an incomplete operation by one user does not cause unexpected side effects for other users
+    Durability:once an operation is complete it will be preserved even in the face of machine or system failure
+    
+    
+Slowly Changing Dimensions (SCD) - dimensions that change slowly over time, rather than changing on regular schedule, time-base. 
+In Data Warehouse there is a need to track changes in dimension attributes in order to report historical data. 
+In other words, implementing one of the SCD types should enable users assigning proper dimension's attribute value for given date. 
+Example of such dimensions could be: customer, geography, employee.
+
+There are many approaches how to deal with SCD. The most popular are:
+
+
+Type 0 - The passive method
+Type 1 - Overwriting the old value
+Type 2 - Creating a new additional record
+Type 3 - Adding a new column
+Type 4 - Using historical table
+Type 6 - Combine approaches of types 1,2,3 (1+2+3=6)
+
+
+ACID TABLE:
+
+create table acid
+(id int,name string,location string)
+clustered by (location) into 2 buckets
+row format delimited
+fields terminated by ','
+stored as orc
+
+alter table acid set tblproperties("transactional"="true");
+OK
+Time taken: 0.267 seconds
+hive (mounika)> insert into table acid values (1,"mouni","hyderabad"),(2,"murali","bandglore");
+FAILED: SemanticException [Error 10265]: This command is not allowed on an ACID table mounika.acid with a non-ACID transaction manager. Failed command: null
+hive (mounika)> SET hive.txn.manager=org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;
+SET hive.support.concurrency=true;
+SET hive.enforce.bucketing=true;
+SET hive.exec.dynamic.partition.mode=nonstrict;
+SET hive.compactor.initiator.on=true;
+SET hive.compactor.worker.threads=1;
+
+hive> SET hive.support.concurrency=true;
+hive> SET hive.enforce.bucketing=true;
+hive> SET hive.exec.dynamic.partition.mode=nonstrict;
+hive> SET hive.compactor.initiator.on=true;
+hive> SET hive.compactor.worker.threads=1;
+hive> SET hive.txn.manager=org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;
+hive> select * from acid
+    > ;
+FAILED: SemanticException [Error 10001]: Line 1:14 Table not found 'acid'
+hive> use mounika;
+OK
+Time taken: 1.101 seconds
+hive> set hive.cli.print.current.db=true;
+hive (mounika)> select * from acid;
+OK
+2       murali  bandglore
+1       mouni   hyderabad
+Time taken: 0.522 seconds, Fetched: 2 row(s)
+hive (mounika)> update acid set location="banglore" where name="mouni";
+FAILED: SemanticException [Error 10302]: Updating values of bucketing columns is not supported.  Column location.
+hive (mounika)> update acid set name="mounika" where location="hyderabad";
+hive (mounika)> select * from acid;
+OK
+2       murali  bandglore
+1       mounika hyderabad
+
+delete from acid where location="hyderabad"
+
+OK
+2       murali  bandglore
